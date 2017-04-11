@@ -1,0 +1,49 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}
+    Главная страница
+{% endblock %}
+
+{% block content %}
+    <div >
+     <p><img src="../../static/media/icon.png" width="150" alt="TextAnalysis"></p>
+    </div>
+    <br><form enctype="multipart/form-data" method="post" id="filein">
+    <input type="file" accept="text/*" name="text">
+    <br><textarea class="textarea" readonly disabled title="Текст" >
+text
+    </textarea>
+    </form>
+   <br> <form>
+            <input id="analysis" type="button"  value="Анализ текста">
+    </form>
+    <div id="content"></div>
+    <script>
+            $('#analysis').click(function(){
+                $.ajax({
+                    url: {% url 'start' %},
+                    cache: false,
+                    success: function(html){
+                        $("#content").html(html);
+                    }
+                });
+            });
+
+    </script>
+
+    <table class="table">
+   <caption>Оценка текста</caption>
+   <tr>
+    <th>Критерий</th>
+    <th>Оценка</th>
+   </tr>
+   <tr><td>Водность</td><td>0</td></tr>
+   <tr><td>Информативность</td><td>0</td></tr>
+   <tr><td>Орфографическая корректность</td><td>0</td></tr>
+   <tr><td>Синтаксическая корректность</td><td>0</td></tr>
+   <tr><td>Рекламность</td><td>0</td></tr>
+   <tr><td>Тональность</td><td>0</td></tr>
+
+        <tr><td>Общая оценка</td><td>0</td></tr>
+  </table>
+{% endblock %}
