@@ -2,7 +2,7 @@ import os
 import re
 import pymorphy2
 from collections import OrderedDict
-from text_analysis.neural_imdb_word2vec_training import Word2VecTrain
+from blog.text_analysis.neural_imdb_word2vec_training import Word2VecTrain
 
 
 class PrepText:

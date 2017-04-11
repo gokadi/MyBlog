@@ -2,7 +2,7 @@ from gensim.models import Word2Vec
 import numpy as np
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
-from text_analysis.neural_imdb_word2vec_training import Word2VecTrain
+from blog.text_analysis.neural_imdb_word2vec_training import Word2VecTrain
 
 
 class Word2VecUsage:

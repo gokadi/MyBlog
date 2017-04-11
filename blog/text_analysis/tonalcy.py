@@ -1,4 +1,4 @@
-from text_analysis.neural_imdb_word2vec_using import Word2VecUsage
+from blog.text_analysis.neural_imdb_word2vec_using import Word2VecUsage
 
 
 class Tonal:
