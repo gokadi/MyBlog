@@ -8,10 +8,13 @@
     <div >
      <p><img src="../../static/media/icon.png" width="150" alt="TextAnalysis"></p>
     </div>
-    <br><form enctype="multipart/form-data" method="post" id="filein">
-    <input type="file" accept="text/*" name="text">
+    <br><form action="/upload_file/" enctype="multipart/form-data" method="post" id="fileupload" onsubmit="return false">
+    {% csrf_token %}
+    <input type="file" accept="text/*" name="inputfile" onchange="return document.getElementById('fileupload').submit();">
+     </form>
+    <form>
     <br><textarea class="textarea" readonly disabled title="Текст" >
-text
+        {{ Text }}
     </textarea>
     </form>
    <br> <form>

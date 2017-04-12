@@ -18,6 +18,7 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^$', 'blog.views.home', name='home'),
     url(r'^start/$', 'blog.views.start', name='start'),
-    url(r'^about/$', 'blog.views.about', name='about'),
     url(r'^contacts/$', 'blog.views.contacts', name='contacts'),
+    url(r'^about/$', 'blog.views.about', name='about'),
+    url(r'upload_file/$', 'blog.views.upload_file', name='upload_file'),
 ]
