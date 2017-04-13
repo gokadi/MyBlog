@@ -17,3 +17,6 @@ class Informativity:
 
     def get_mark(self):
         return self.__value
+
+    def __str__(self):
+        return "%.2f" % self.get_mark()

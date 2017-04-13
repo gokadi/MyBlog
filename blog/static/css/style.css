@@ -1,11 +1,12 @@
 .main-content {
-    margin-top: 80px;
+    margin-top: 50px;
 }
 .textarea {
+    height: 200px;
     width : 100%;
     resize: none;
     overflow: auto;
-	border		: 1px solid grey;
+	border		: 2px solid grey;
 }
 html {
   position: relative;
@@ -48,3 +49,4 @@ border: 1px solid grey; /*устанавливаем для таблицы вн�
 }
 
 #wrapper > .container.blog { background: #eee; }
+

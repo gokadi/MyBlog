@@ -12,3 +12,6 @@ class Tonal:
         o = Word2VecUsage()
         return o.pred(self.__txt)
 
+    def __str__(self):
+        return "%.2f" % self.get_mark()
+

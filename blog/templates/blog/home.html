@@ -8,45 +8,33 @@
     <div >
      <p><img src="../../static/media/icon.png" width="150" alt="TextAnalysis"></p>
     </div>
-    <br><form action="/upload_file/" enctype="multipart/form-data" method="post" id="fileupload" onsubmit="return false">
+   <br><form action="{% url 'upload_file' %}" enctype="multipart/form-data" method="post" id="fileupload" onsubmit="return false">
     {% csrf_token %}
     <input type="file" accept="text/*" name="inputfile" onchange="return document.getElementById('fileupload').submit();">
      </form>
-    <form>
-    <br><textarea class="textarea" readonly disabled title="Текст" >
-        {{ Text }}
-    </textarea>
-    </form>
-   <br> <form>
-            <input id="analysis" type="button"  value="Анализ текста">
-    </form>
-    <div id="content"></div>
-    <script>
-            $('#analysis').click(function(){
-                $.ajax({
-                    url: {% url 'start' %},
-                    cache: false,
-                    success: function(html){
-                        $("#content").html(html);
-                    }
-                });
-            });
 
-    </script>
+
+    <form>
+    <br><textarea class="textarea" readonly disabled title="">{{Text}}</textarea>
+    </form>
+   <br> <form action="{% url 'start' %}" enctype="multipart/form-data" method="get" id="start_analysis">
+{% csrf_token %}
+            <input id="analysis" type="submit"  value="Анализ текста">
+    </form>
 
     <table class="table">
-   <caption>Оценка текста</caption>
+   <h2>Оценка текста</h2>
    <tr>
     <th>Критерий</th>
     <th>Оценка</th>
    </tr>
-   <tr><td>Водность</td><td>0</td></tr>
-   <tr><td>Информативность</td><td>0</td></tr>
-   <tr><td>Орфографическая корректность</td><td>0</td></tr>
-   <tr><td>Синтаксическая корректность</td><td>0</td></tr>
-   <tr><td>Рекламность</td><td>0</td></tr>
-   <tr><td>Тональность</td><td>0</td></tr>
-
-        <tr><td>Общая оценка</td><td>0</td></tr>
+   <tr><td>Водность</td><td>{{ water|default:0 }}</td></tr>
+   <tr><td>Информативность</td><td>{{ inform|default:0 }}</td></tr>
+   <tr><td>Орфографическая корректность</td><td>{{ orthograf|default:0 }}</td></tr>
+   <tr><td>Синтаксическая корректность</td><td>{{ syntax|default:0 }}</td></tr>
+   <tr><td>Рекламность</td><td>{{ advert|default:0 }}</td></tr>
+   <tr><td>Тональность</td><td>{{ tonal|default:0 }}</td></tr>
+   <tr><td>Общая оценка</td><td>{{ total|default:0 }}</td></tr>
   </table>
+
 {% endblock %}

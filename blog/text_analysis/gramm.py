@@ -20,3 +20,6 @@ class GrammMark:
 
     def get_mark(self):
         return 1 - self.__value
+
+    def __str__(self):
+        return "%.2f" % self.get_mark()
