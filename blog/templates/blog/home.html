@@ -77,13 +77,100 @@
             <form action="{% url 'start' %}" enctype="multipart/form-data" method="get" id="start_analysis">
                 <div class="inputfile_div">
                     {% csrf_token %}
-                    <input class="inputfile" id="analysis" type="submit"  value="Анализ">
+                    <input class="inputfile progress" id="analysis" type="submit"  value="Анализ" onclick="analaysis()">
                 </div>
             </form>
         </div>
     </div>
 
-    <div style="margin-top: 50px">
+    <div class="row">
+        <div id="progress-bar">
+            <progress class="progress progress-striped progress-success" value="1" max="100">
+                <div class="progress">
+                    <span class="progress-bar" style="width: 1%;">1%</span>
+                </div>
+            </progress>
+            <div class="progress-info">init</div>
+        </div>
+    </div>
+
+
+     <script type="text/javascript">
+ function analaysis() {
+     var progressBarContainer = $('#progress-bar');
+     var progressBar = {
+         chain: [],
+         progress: progressBarContainer.children('progress'),
+         progressBar: progressBarContainer.find('.progress-bar'),
+         progressInfo: progressBarContainer.children('.progress-info'),
+         set: function (value, info, noPush) {
+             if (!noPush) {
+                 this.chain.push(value);
+             }
+             if (this.chain[0] == value) {
+                 this.go(value, info);
+             }
+             else {
+                 var self = this;
+                 setTimeout(function () {
+                     self.set(value, info, true)
+                 }, 200);
+             }
+         },
+         go: function (value, info) {
+             this.progressInfo.text(info);
+             var self = this;
+             var interval = setInterval(function () {
+                 var curr = self.progress.attr('value');
+                 if (curr >= value) {
+                     clearInterval(interval);
+                     self.progress.attr('value', value);
+                     self.progressBar.css('width', value + '%');
+                     self.chain.shift()
+                 }
+                 else {
+                     self.progress.attr('value', ++curr);
+                     self.progressBar.css('width', curr + '%');
+                 }
+             }, 10)
+         }
+     };
+     progressBar.set(2, 'Производится анализ текста.');
+     progressBar.set(3, 'Производится анализ текста..');
+     progressBar.set(4, 'Производится анализ текста...');
+     progressBar.set(5, 'Производится анализ текста.');
+     progressBar.set(6, 'Производится анализ текста..');
+     progressBar.set(7, 'Производится анализ текста...');
+     progressBar.set(8, 'Производится анализ текста.');
+     progressBar.set(9, 'Производится анализ текста..');
+     progressBar.set(10, 'Производится анализ текста...');
+     progressBar.set(15, 'Производится анализ текста.');
+     progressBar.set(20, 'Производится анализ текста..');
+     progressBar.set(25, 'Производится анализ текста...');
+     progressBar.set(30, 'Производится анализ текста.');
+     progressBar.set(35, 'Производится анализ текста..');
+     progressBar.set(40, 'Производится анализ текста...');
+     progressBar.set(45, 'Производится анализ текста.');
+     progressBar.set(50, 'Производится анализ текста..');
+     progressBar.set(55, 'Производится анализ текста...');
+     progressBar.set(60, 'Производится анализ текста.');
+     progressBar.set(65, 'Производится анализ текста..');
+     progressBar.set(70, 'Производится анализ текста...');
+     progressBar.set(75, 'Производится анализ текста.');
+     progressBar.set(80, 'Производится анализ текста..');
+     progressBar.set(85, 'Производится анализ текста...');
+     progressBar.set(90, 'Производится анализ текста.');
+     progressBar.set(95, 'Производится анализ текста..');
+     progressBar.set(100, 'Записываются результаты...');
+ })
+ </script>
+
+
+
+
+
+
+    <div style="margin-top: 20px">
         <table class="table">
             <tr style="font-size: 20px"><th>Критерий</th><th>Оценка</th></tr>
             <tr style="font-size: 20px"><td>Водность</td><td>{{ water|default:0 }}</td></tr>

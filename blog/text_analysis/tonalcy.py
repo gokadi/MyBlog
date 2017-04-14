@@ -6,12 +6,15 @@ class Tonal:
     def __init__(self, obj):
         self.__value = 0.0
         self.__obj = obj
+        self.o = Word2VecUsage()
         self.__txt = obj.get_txt()
 
     def get_mark(self):
-        o = Word2VecUsage()
-        return o.pred(self.__txt)
+        return self.o.pred(self.__txt)
 
     def __str__(self):
         return "%.2f" % self.get_mark()
+
+    def proceed_class(self):
+        return self.o
 

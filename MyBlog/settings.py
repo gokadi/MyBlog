@@ -39,7 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'blog',
 )
-
+INSTALLED_APPS += ("celery", )
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -105,3 +105,4 @@ def rel(*x):
 STATIC_URL = '/static/'
 MEDIA_ROOT = rel('static')
 MEDIA_URL = '/media/'
+

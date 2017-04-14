@@ -1,7 +1,21 @@
 .main-content {
     margin-top: 150px;
-
 }
+
+/* Для progress_bar*/
+#progress-bar {
+  width: 100%;
+}
+.progress {
+  height: 25px;
+  width: 100%;
+}
+.progress-info {
+    color: #000;
+    text-align: center;
+    font-weight: bold;
+}
+
 .textdiv {
     margin-top: 50px;
     margin-right: auto;
@@ -135,5 +149,6 @@ body {
 .file-upload span {
     line-height: 36px; /* Делаем вертикальное выравнивание текста, который написан на кнопке */
 }
+
 
 
