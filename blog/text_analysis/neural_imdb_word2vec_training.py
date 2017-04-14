@@ -39,7 +39,7 @@ class Word2VecTrain:
         # Уменьшает количество используемой RAM
         #self.__model.init_sims(replace=True)
         # Сохраняем модель
-        self.__model.save(model_name)
+        self.__model.save("blog/text_analysis"+model_name)
 
     def __make_sentences(self):
         sentences = []

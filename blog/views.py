@@ -39,7 +39,8 @@ def contacts(request):
 def start(request):
     context = {}
     context.update(csrf(request))
-    syntax_, water_, orthograf_, inform_, total_ = init_backup.analysis(Text.txt)
-    context = RequestContext(request, {'Text': Text.txt, 'water': water_, 'inform': inform_, 'orthograf': orthograf_,
-                                       'syntax': syntax_, 'advert': 5, 'tonal': 6, 'total': total_})
+    syntax_, water_, orthograf_, inform_, total_, tonal_ = init_backup.analysis(Text.txt)
+    context = RequestContext(request, {'Text': Text.txt, 'water': "%.2f" %water_, 'inform': "%.2f" %inform_,
+                                       'orthograf': "%.2f" %orthograf_, 'syntax': "%.2f" %syntax_,
+                                       'advert': "%.2f" %5, 'tonal': "%.2f" %tonal_, 'total': "%.2f" %total_})
     return render(request, "blog/home.html", context)

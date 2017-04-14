@@ -5,36 +5,95 @@
 {% endblock %}
 
 {% block content %}
-    <div >
-     <p><img src="../../static/media/icon.png" width="150" alt="TextAnalysis"></p>
+
+    <div class="row upload">
+        <div class="col-lg-2" >
+            <img src="../../static/media/icon.png" width="150" alt="TextAnalysis">
+        </div>
+        <div class="col-lg-8">
+            <h1> Добро пожаловать! </h1>
+            <p class="text_welcome">
+            Проект <a href="http://textanalysis.ru">TextAnalysis.ru</a> посвящен анализированию
+            качества текстов в сети Интернет</p>
+        </div>
+        <div class="col-lg-2 upload_div">
+            <form action="{% url 'upload_file' %}" enctype="multipart/form-data"
+                  method="post" id="fileupload" name="fileupload" onsubmit="return false">
+                {% csrf_token %}
+                <div class="file-upload vcenter" onchange="return document.getElementById('fileupload').submit();">
+                    <label>
+                        <input type="file" accept="text/*" name="inputfile" >
+                        <span>Текст</span>
+                    </label>
+                </div>
+{#            <input type="file" accept="text/*" name="inputfile"#}{# пусть будет. дефолтная кнопка на загрузку #}
+{#                   onchange="return document.getElementById('fileupload').submit();">#}
+            </form>
+        </div>
     </div>
-   <br><form action="{% url 'upload_file' %}" enctype="multipart/form-data" method="post" id="fileupload" onsubmit="return false">
-    {% csrf_token %}
-    <input type="file" accept="text/*" name="inputfile" onchange="return document.getElementById('fileupload').submit();">
-     </form>
+
+{#    <div class="row">#}
+{#        <div>#}
+{#            <form action="{% url 'upload_file' %}" enctype="multipart/form-data"#}
+{#                  method="post" id="fileupload" name="fileupload" onsubmit="return false">#}
+{#                {% csrf_token %}#}
+{#                <div class="file-upload" onchange="return document.getElementById('fileupload').submit();">#}
+{#                    <label>#}
+{#                        <input type="file" accept="text/*" name="inputfile" >#}
+{#                        <span>Файл</span>#}
+{#                    </label>#}
+{#                </div>#}
+{#            <input type="file" accept="text/*" name="inputfile"#}{# пусть будет. дефолтная кнопка на загрузку #}
+{#                   onchange="return document.getElementById('fileupload').submit();">#}
+{#            </form>#}
+{#        </div>#}
+{#    </div>#}
+
+    <div class="row">
+        <div class="textdiv">
+            <form>
+                <textarea style="font-size: 20px" class="textarea" readonly disabled title="">{{Text}}</textarea>
+            </form>
+        </div>
+    </div>
+
+{#    <div class="row">#}
+{#        <div>#}
+{#            <form action="{% url 'start' %}" enctype="multipart/form-data" method="get" id="start_analysis">#}
+{#                <div class="inputfile_div">#}
+{#                    {% csrf_token %}#}
+{#                    <input class="inputfile" id="analysis" type="submit"  value="Анализ">#}
+{#                </div>#}
+{#            </form>#}
+{#        </div>#}
+{#    </div>#}
 
 
-    <form>
-    <br><textarea class="textarea" readonly disabled title="">{{Text}}</textarea>
-    </form>
-   <br> <form action="{% url 'start' %}" enctype="multipart/form-data" method="get" id="start_analysis">
-{% csrf_token %}
-            <input id="analysis" type="submit"  value="Анализ текста">
-    </form>
+    <div class="row" style="padding-top: 50px">
+        <div class="col-lg-10">
+            <h2>Оценка текста</h2>
+        </div>
+        <div class="col-lg-2">
+            <form action="{% url 'start' %}" enctype="multipart/form-data" method="get" id="start_analysis">
+                <div class="inputfile_div">
+                    {% csrf_token %}
+                    <input class="inputfile" id="analysis" type="submit"  value="Анализ">
+                </div>
+            </form>
+        </div>
+    </div>
 
-    <table class="table">
-   <h2>Оценка текста</h2>
-   <tr>
-    <th>Критерий</th>
-    <th>Оценка</th>
-   </tr>
-   <tr><td>Водность</td><td>{{ water|default:0 }}</td></tr>
-   <tr><td>Информативность</td><td>{{ inform|default:0 }}</td></tr>
-   <tr><td>Орфографическая корректность</td><td>{{ orthograf|default:0 }}</td></tr>
-   <tr><td>Синтаксическая корректность</td><td>{{ syntax|default:0 }}</td></tr>
-   <tr><td>Рекламность</td><td>{{ advert|default:0 }}</td></tr>
-   <tr><td>Тональность</td><td>{{ tonal|default:0 }}</td></tr>
-   <tr><td>Общая оценка</td><td>{{ total|default:0 }}</td></tr>
-  </table>
+    <div style="margin-top: 50px">
+        <table class="table">
+            <tr style="font-size: 20px"><th>Критерий</th><th>Оценка</th></tr>
+            <tr style="font-size: 20px"><td>Водность</td><td>{{ water|default:0 }}</td></tr>
+            <tr style="font-size: 20px"><td>Информативность</td><td>{{ inform|default:0 }}</td></tr>
+            <tr style="font-size: 20px"><td>Орфографическая корректность</td><td>{{ orthograf|default:0 }}</td></tr>
+            <tr style="font-size: 20px"><td>Синтаксическая корректность</td><td>{{ syntax|default:0 }}</td></tr>
+            <tr style="font-size: 20px"><td>Рекламность</td><td>{{ advert|default:0 }}</td></tr>
+            <tr style="font-size: 20px"><td>Тональность</td><td>{{ tonal|default:0 }}</td></tr>
+            <tr style="font-size: 20px"><td>Общая оценка</td><td>{{ total|default:0 }}</td></tr>
+        </table>
+    </div>
 
 {% endblock %}

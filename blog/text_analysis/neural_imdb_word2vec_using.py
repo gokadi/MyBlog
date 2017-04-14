@@ -11,7 +11,7 @@ class Word2VecUsage:
     def __init__(self):
         self.train = Word2VecTrain.train
         self.test = Word2VecTrain.test
-        self.__model = Word2Vec.load("300features_40minwords_10context_RU")
+        self.__model = Word2Vec.load("blog/text_analysis/300features_40minwords_10context_RU")
         self.__forest_train()
         #self.__forest_test()
 

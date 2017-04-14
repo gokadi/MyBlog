@@ -1,12 +1,22 @@
 .main-content {
-    margin-top: 50px;
+    margin-top: 150px;
+
 }
+.textdiv {
+    margin-top: 50px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
 .textarea {
+    margin-top: 10px;
+    margin-right: 1.5%;
+    margin-left: 1.5%;
     height: 200px;
-    width : 100%;
+    width : 97%;
     resize: none;
     overflow: auto;
-	border		: 2px solid grey;
+	border: 2px solid black;
 }
 html {
   position: relative;
@@ -37,8 +47,10 @@ body {
 .footer-contacts ul { padding-left:0; list-style: none; }
 
 .table {
-border-collapse: collapse; /*убираем пустые промежутки между ячейками*/
-border: 1px solid grey; /*устанавливаем для таблицы внешнюю границу серого цвета толщиной 1px*/
+    width: 100%;
+    clear:both;
+    border-collapse: collapse; /*убираем пустые промежутки между ячейками*/
+    border: 1px solid grey; /*устанавливаем для таблицы внешнюю границу серого цвета толщиной 1px*/
 }
 .container .text-muted {
   margin: 20px 0;
@@ -49,4 +61,79 @@ border: 1px solid grey; /*устанавливаем для таблицы вн�
 }
 
 #wrapper > .container.blog { background: #eee; }
+
+.upload {
+    clear:both;
+}
+.inputfile_div {
+    padding-top: 20px;
+    vertical-align: bottom;
+    /*margin-left: auto;*/
+    /*margin-right: auto;*/
+    text-align: center;
+}
+.inputfile {
+    /*margin-top: 10px;*/
+    width: 160px;
+    height: 35px;
+    background: #ff4a4a;
+    border: 0;
+    border-radius: 5px;
+    color: #e5e5e5;
+    text-align: center;
+    font-weight: normal;
+    font-size: 25px;
+}
+
+.inputfile:hover {
+     background: #ff8080;
+}
+
+.vcenter {
+    float: none;
+    vertical-align: bottom;
+}
+.text_welcome {
+    font-size: 24px;
+}
+.upload_div {
+    padding-top: 70px;
+}
+.file-upload {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    vertical-align: bottom;
+    /*margin-top: 10px;!* Для десктопной версии*!*/
+    position: relative; /* Даем возможность делать позиционирование, внутри данного элемента */
+    overflow: hidden; /* Все что выходит за пределы - скрываем */
+    width: 160px; /* Задаем ширину кнопки выбора файла */
+    height: 35px; /* Задаем высоту кнопки выбора файла */
+    background: #ff4a4a;
+    border-radius: 5px;
+    /*padding: 8px 4px;*/
+    color: #e5e5e5;
+}
+.file-upload:hover {
+    background: #ff8080;
+}
+.file-upload input[type="file"]{
+    display: none; /* Обязательно скрываем настоящий Input File */
+}
+.file-upload label {
+    font-size: 25px;
+    font-weight: normal;
+     /* Растягиваем label на всю возможную площадь блока .file-upload */
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+.file-upload span {
+    line-height: 36px; /* Делаем вертикальное выравнивание текста, который написан на кнопке */
+}
+
 
