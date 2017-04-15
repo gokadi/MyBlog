@@ -13,7 +13,6 @@ class Word2VecUsage:
         self.test = Word2VecTrain.test
         self.__model = Word2Vec.load("blog/text_analysis/300features_40minwords_10context_RU")
         self.__forest_train()
-        self.__progress = 0
         self.__totalsize = 0
         #self.__forest_test()
 
@@ -87,9 +86,5 @@ class Word2VecUsage:
                                                                num_features)
             # Счетчик ++
             counter = counter + 1
-            self.__progress += 1
         # Возвращаем массив усредненных векторов
         return reviewFeatureVecs
-
-    def get_progress(self):
-        return self.__progress, self.__totalsize

@@ -17,161 +17,77 @@
             качества текстов в сети Интернет</p>
         </div>
         <div class="col-lg-2 upload_div">
-            <form action="{% url 'upload_file' %}" enctype="multipart/form-data"
+            <form action="{% url 'upload_file' %}"  enctype="multipart/form-data"
                   method="post" id="fileupload" name="fileupload" onsubmit="return false">
                 {% csrf_token %}
-                <div class="file-upload vcenter" onchange="return document.getElementById('fileupload').submit();">
+                <div class="file-upload vcenter buttons" onchange="return document.getElementById('fileupload').submit();">
                     <label>
-                        <input type="file" accept="text/*" name="inputfile" >
+                        <input type="file" accept="text/*" name="file_upload" id="file_upload"  >
                         <span>Текст</span>
                     </label>
                 </div>
-{#            <input type="file" accept="text/*" name="inputfile"#}{# пусть будет. дефолтная кнопка на загрузку #}
-{#                   onchange="return document.getElementById('fileupload').submit();">#}
             </form>
         </div>
     </div>
-
-{#    <div class="row">#}
-{#        <div>#}
-{#            <form action="{% url 'upload_file' %}" enctype="multipart/form-data"#}
-{#                  method="post" id="fileupload" name="fileupload" onsubmit="return false">#}
-{#                {% csrf_token %}#}
-{#                <div class="file-upload" onchange="return document.getElementById('fileupload').submit();">#}
-{#                    <label>#}
-{#                        <input type="file" accept="text/*" name="inputfile" >#}
-{#                        <span>Файл</span>#}
-{#                    </label>#}
-{#                </div>#}
-{#            <input type="file" accept="text/*" name="inputfile"#}{# пусть будет. дефолтная кнопка на загрузку #}
-{#                   onchange="return document.getElementById('fileupload').submit();">#}
-{#            </form>#}
-{#        </div>#}
-{#    </div>#}
 
     <div class="row">
-        <div class="textdiv">
+        <div  id="textarea_div" class="textdiv">
             <form>
-                <textarea style="font-size: 20px" class="textarea" readonly disabled title="">{{Text}}</textarea>
+                <textarea id="textarea" style="font-size: 20px" class="textarea" readonly disabled title="">{{Text}}</textarea>
             </form>
         </div>
     </div>
 
-{#    <div class="row">#}
-{#        <div>#}
-{#            <form action="{% url 'start' %}" enctype="multipart/form-data" method="get" id="start_analysis">#}
-{#                <div class="inputfile_div">#}
-{#                    {% csrf_token %}#}
-{#                    <input class="inputfile" id="analysis" type="submit"  value="Анализ">#}
-{#                </div>#}
-{#            </form>#}
-{#        </div>#}
-{#    </div>#}
-
-
     <div class="row" style="padding-top: 50px">
-        <div class="col-lg-10">
+        <div class="col-lg-9">
             <h2>Оценка текста</h2>
+        </div>
+        <div class="col-lg-1" style="margin-left: auto; margin-right: auto; text-align: center;">
+            <img class="loading" src="../../static/media/25.gif" name="progr" id="progr">
         </div>
         <div class="col-lg-2">
             <form action="{% url 'start' %}" enctype="multipart/form-data" method="get" id="start_analysis">
                 <div class="inputfile_div">
                     {% csrf_token %}
-                    <input class="inputfile progress" id="analysis" type="submit"  value="Анализ" onclick="analaysis()">
+                    <input class="inputfile progress buttons" id="analysis" type="submit"  value="Анализ">
                 </div>
             </form>
         </div>
     </div>
 
-    <div class="row">
-        <div id="progress-bar">
-            <progress class="progress progress-striped progress-success" value="1" max="100">
-                <div class="progress">
-                    <span class="progress-bar" style="width: 1%;">1%</span>
-                </div>
-            </progress>
-            <div class="progress-info">init</div>
-        </div>
-    </div>
+<script type="text/javascript">
+{#    var frm = $('#fileupload');#}
+{#file = new FormData(document.forms.fileupload);#}
+{#file.append( 'file_upload',  $('input[type=file]')[0].files[0] );#}
+{#var data = $("form").serialize();#}
+{##}
+{#    function asda() {#}
+{#        $.ajax({#}
+{#            type: 'POST',#}
+{#            url: {% url 'upload_file' %},#}
+{#            data: file,#}
+{#            success: function (data) {#}
+{#                alert(data);#}
+{#                $("#textarea_div").html(data);#}
+{#            },#}
+{#            error: function (data) {#}
+{#                alert(data)#}
+{#            }#}
+{#        });#}
+{#        return false;#}
+{#    }#}
 
+  $(document).ready(function() {
+        $('#analysis').click(function(){
+            $('.loading').css('visibility', 'visible');
+            $('.loading').css('padding-top', '20px');
+        });
+    });
 
-     <script type="text/javascript">
- function analaysis() {
-     var progressBarContainer = $('#progress-bar');
-     var progressBar = {
-         chain: [],
-         progress: progressBarContainer.children('progress'),
-         progressBar: progressBarContainer.find('.progress-bar'),
-         progressInfo: progressBarContainer.children('.progress-info'),
-         set: function (value, info, noPush) {
-             if (!noPush) {
-                 this.chain.push(value);
-             }
-             if (this.chain[0] == value) {
-                 this.go(value, info);
-             }
-             else {
-                 var self = this;
-                 setTimeout(function () {
-                     self.set(value, info, true)
-                 }, 200);
-             }
-         },
-         go: function (value, info) {
-             this.progressInfo.text(info);
-             var self = this;
-             var interval = setInterval(function () {
-                 var curr = self.progress.attr('value');
-                 if (curr >= value) {
-                     clearInterval(interval);
-                     self.progress.attr('value', value);
-                     self.progressBar.css('width', value + '%');
-                     self.chain.shift()
-                 }
-                 else {
-                     self.progress.attr('value', ++curr);
-                     self.progressBar.css('width', curr + '%');
-                 }
-             }, 10)
-         }
-     };
-     progressBar.set(2, 'Производится анализ текста.');
-     progressBar.set(3, 'Производится анализ текста..');
-     progressBar.set(4, 'Производится анализ текста...');
-     progressBar.set(5, 'Производится анализ текста.');
-     progressBar.set(6, 'Производится анализ текста..');
-     progressBar.set(7, 'Производится анализ текста...');
-     progressBar.set(8, 'Производится анализ текста.');
-     progressBar.set(9, 'Производится анализ текста..');
-     progressBar.set(10, 'Производится анализ текста...');
-     progressBar.set(15, 'Производится анализ текста.');
-     progressBar.set(20, 'Производится анализ текста..');
-     progressBar.set(25, 'Производится анализ текста...');
-     progressBar.set(30, 'Производится анализ текста.');
-     progressBar.set(35, 'Производится анализ текста..');
-     progressBar.set(40, 'Производится анализ текста...');
-     progressBar.set(45, 'Производится анализ текста.');
-     progressBar.set(50, 'Производится анализ текста..');
-     progressBar.set(55, 'Производится анализ текста...');
-     progressBar.set(60, 'Производится анализ текста.');
-     progressBar.set(65, 'Производится анализ текста..');
-     progressBar.set(70, 'Производится анализ текста...');
-     progressBar.set(75, 'Производится анализ текста.');
-     progressBar.set(80, 'Производится анализ текста..');
-     progressBar.set(85, 'Производится анализ текста...');
-     progressBar.set(90, 'Производится анализ текста.');
-     progressBar.set(95, 'Производится анализ текста..');
-     progressBar.set(100, 'Записываются результаты...');
- })
- </script>
-
-
-
-
-
+</script>
 
     <div style="margin-top: 20px">
-        <table class="table">
+        <table class="table" id="table">
             <tr style="font-size: 20px"><th>Критерий</th><th>Оценка</th></tr>
             <tr style="font-size: 20px"><td>Водность</td><td>{{ water|default:0 }}</td></tr>
             <tr style="font-size: 20px"><td>Информативность</td><td>{{ inform|default:0 }}</td></tr>

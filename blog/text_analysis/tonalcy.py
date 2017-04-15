@@ -15,6 +15,4 @@ class Tonal:
     def __str__(self):
         return "%.2f" % self.get_mark()
 
-    def proceed_class(self):
-        return self.o
 

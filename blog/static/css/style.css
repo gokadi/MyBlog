@@ -2,20 +2,13 @@
     margin-top: 150px;
 }
 
-/* Для progress_bar*/
-#progress-bar {
-  width: 100%;
-}
-.progress {
-  height: 25px;
-  width: 100%;
-}
-.progress-info {
-    color: #000;
-    text-align: center;
-    font-weight: bold;
+/* Индикация анализирования */
+.loading {
+    padding-top: 0px;
+    visibility: hidden;
 }
 
+/* Контейнер и поле с текстом */
 .textdiv {
     margin-top: 50px;
     margin-right: auto;
@@ -32,25 +25,26 @@
     overflow: auto;
 	border: 2px solid black;
 }
+
 html {
   position: relative;
   min-height: 100%;
 }
 body {
-  /* Margin bottom by footer height */
   margin-bottom: 60px;
 }
 .text-right {
     text-align: right;
 }
+
 .footer {
     background-image: linear-gradient(#484e55, #3a3f44 60%, #313539);
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  /* Set the fixed height of the footer here */
-  height: 60px;
-  /*background-color: #f5f5f5;*/
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 60px;
+    /*background-color: #f5f5f5;*/
 }
 .footer-links ul { padding-left:0; }
 .footer-links li { display:inline-block; margin-right:15px; }
@@ -60,12 +54,14 @@ body {
 .footer-contacts p.text-muted { margin: 0px; margin-bottom: 20px; }
 .footer-contacts ul { padding-left:0; list-style: none; }
 
+/* Таблица с результатами аналаза */
 .table {
     width: 100%;
     clear:both;
     border-collapse: collapse; /*убираем пустые промежутки между ячейками*/
     border: 1px solid grey; /*устанавливаем для таблицы внешнюю границу серого цвета толщиной 1px*/
 }
+
 .container .text-muted {
   margin: 20px 0;
 }
@@ -95,8 +91,6 @@ body {
     border-radius: 5px;
     color: #e5e5e5;
     text-align: center;
-    font-weight: normal;
-    font-size: 25px;
 }
 
 .inputfile:hover {
@@ -135,8 +129,6 @@ body {
     display: none; /* Обязательно скрываем настоящий Input File */
 }
 .file-upload label {
-    font-size: 25px;
-    font-weight: normal;
      /* Растягиваем label на всю возможную площадь блока .file-upload */
     display: block;
     position: absolute;
@@ -150,5 +142,13 @@ body {
     line-height: 36px; /* Делаем вертикальное выравнивание текста, который написан на кнопке */
 }
 
+.buttons {
+    font-size: 25px;
+    font-weight: normal;
+}
+.buttons label {
+    font-size: 25px;
+    font-weight: normal;
+}
 
 

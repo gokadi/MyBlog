@@ -10,15 +10,14 @@ from blog.text_analysis.neural_imdb_word2vec_training import Word2VecTrain
 class Analysis:
 
     def __init__(self, f):
-        self.progress = 0
         self.total = 0
         self.obj = PrepText(f)
         if self.obj.get_flag() == True:
-            self.gramm = GrammMark(self.obj)
-            self.water = Water(self.obj)
-            self.orth = Orthography(self.obj)
-            self.info = Informativity(self.obj)
-            self.ton = Tonal(self.obj)
+            self.gramm = GrammMark(self.obj).get_mark()
+            self.water = Water(self.obj).get_mark()
+            self.orth = Orthography(self.obj).get_mark()
+            self.info = Informativity(self.obj).get_mark()
+            self.ton = Tonal(self.obj).get_mark()
 
     def analyse(self):
         # w2v_train = Word2VecTrain()
@@ -41,14 +40,8 @@ class Analysis:
             print(self.ton)
             self.total_mark = (self.water + self.gramm + self.orth + self.info) / 4
             print("Общая оценка качества текста: %.2f" % self.total_mark)
-            self.total_mark_str = "%.2f" % self.total_mark
-            return self.gramm, self.water, self.orth, self.info, self.total_mark_str, self.ton
+            # self.ton = 0
+            return self.gramm, self.water, self.orth, self.info, self.total_mark, self.ton
         else:
             self.gramm, self.water, self.orth, self.info, self.total_mark, self.ton = 0, 0, 0, 0, 0, 0
             return self.gramm, self.water, self.orth, self.info, self.total_mark, self.ton
-
-    def proceed(self):
-        progress, totalsize = self.ton.proceed_class().get_progress()
-        return progress, totalsize
-
-

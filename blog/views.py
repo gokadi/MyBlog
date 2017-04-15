@@ -16,15 +16,19 @@ def handle_uploaded_file(f):
 @csrf_protect
 def upload_file(request):
     if request.method == 'POST':
-        handle_uploaded_file(request.FILES['inputfile'])
+        handle_uploaded_file(request.FILES['file_upload'])
         return render(request, 'blog/home.html', {'Text': Text.txt})
     return render(request, 'blog/home.html')
 
 
 @csrf_protect
 def home(request):
-    Text.txt = ""
-    return render(request, "blog/home.html", {'Text': Text.txt})
+    try: # изначально поле пустое и приложение выкидывает AttributeError
+        Text.txt = ""
+    except AttributeError:
+        Text.txt = ""
+    finally:
+        return render(request, "blog/home.html", {'Text': Text.txt})
 
 @csrf_protect
 def about(request):
@@ -38,13 +42,17 @@ def contacts(request):
 
 @csrf_protect
 def start(request):
-    context = {}
-    context.update(csrf(request))
-    analyser = init_backup.Analysis(Text.txt)
-    # syntax_, water_, orthograf_, inform_, total_, tonal_ = init_backup.analysis(Text.txt)
-    syntax_, water_, orthograf_, inform_, total_ = analyser.analyse()
-    context = RequestContext(request, {'Text': Text.txt, 'water': "%.2f" %water_, 'inform': "%.2f" %inform_,
-                                       'orthograf': "%.2f" %orthograf_, 'syntax': "%.2f" %syntax_,
-                                       'advert': "%.2f" %5, 'tonal':  "%.2f" %0, 'total': "%.2f" %total_})
-    return render(request, "blog/home.html", context)
+    if Text.txt != '':
+        context = {}
+        context.update(csrf(request))
+        analyser = init_backup.Analysis(Text.txt)
+        # syntax_, water_, orthograf_, inform_, total_, tonal_ = init_backup.analysis(Text.txt)
+        syntax_, water_, orthograf_, inform_, total_, tonal_ = analyser.analyse()
+        context = RequestContext(request, {'Text': Text.txt, 'water': "%.2f" % water_, 'inform': "%.2f" % inform_,
+                                           'orthograf': "%.2f" % orthograf_, 'syntax': "%.2f" % syntax_,
+                                           'advert': "%.2f" % 5, 'tonal': "%.2f" % tonal_, 'total': "%.2f" % total_})
+        return render(request, "blog/home.html", context)
+    else:
+        return render(request, "blog/home.html", {'Text': Text.txt})
+
 
