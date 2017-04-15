@@ -2,8 +2,10 @@ from gensim.models import Word2Vec
 import numpy as np
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
-from blog.text_analysis.neural_imdb_word2vec_training import Word2VecTrain
+from blog.text_analysis.neural_imdb_word2vec_training import *
+from sklearn.externals import joblib
 
+RF_TRAINED = "blog/text_analysis/classifier_dumps/randomforestTRAINED.pkl"
 
 class Word2VecUsage:
     __num_features = int(200)  # Размерность вектора слов
@@ -11,8 +13,11 @@ class Word2VecUsage:
     def __init__(self):
         self.train = Word2VecTrain.train
         self.test = Word2VecTrain.test
-        self.__model = Word2Vec.load("blog/text_analysis/300features_40minwords_10context_RU")
-        self.__forest_train()
+        self.__model = Word2Vec.load(WORD2VEC_TRAINED)
+        # self.__forest_train()
+        # joblib.dump(self.__forest,
+        #             'blog/text_analysis/classifier_dumps/randomforestTRAINED.pkl')# сохраняем обученный классификатор
+        self.__forest = joblib.load(RF_TRAINED)
         self.__totalsize = 0
         #self.__forest_test()
 

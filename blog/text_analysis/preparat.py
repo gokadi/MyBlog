@@ -57,7 +57,7 @@ class PrepText:
     def get_flag(self):
         return self.__flag
 
-    def get_words(self):
+    def get_words(self):  # используется для проверки на водность и орфографию, т.к. в частотном словаре нет повторений
         return Word2VecTrain.review_to_wordlist(self.__txt)
 
     def get_txt(self):

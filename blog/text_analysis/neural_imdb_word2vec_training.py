@@ -8,6 +8,8 @@ import logging
 from gensim.models import word2vec
 
 
+WORD2VEC_TRAINED = "blog/text_analysis/word2vec_dumps/300features_40minwords_10context_RU"
+
 class Word2VecTrain:
     train = pd.read_csv("D:/учеба_магистратура/6курс/Александров/нейросеть/labeledTrainData_RU.tsv", header=0,
                              delimiter="\t", quoting=3)
@@ -17,7 +19,7 @@ class Word2VecTrain:
     unlabeled_train = pd.read_csv("D:/учеба_магистратура/6курс/Александров/нейросеть/unlabeledTrainData_RU.tsv",
                                        header=0, delimiter="\t", quoting=3)
     def __init__(self, features = 200, minword = 40, numworkers = 4, context=10, downsample = 1e-3,
-                 model_name = "300features_40minwords_10context_RU"):
+                 model_name = WORD2VEC_TRAINED):
         # Параметры Word2Vec модели
         self.__num_features = features  # Размерность вектора
         self.__min_word_count = minword  # Слово, встречающееся меньше этого числа не учитывать. (Фильтрует, например, инициалы)

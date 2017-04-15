@@ -17,10 +17,10 @@
             качества текстов в сети Интернет</p>
         </div>
         <div class="col-lg-2 upload_div">
-            <form action="{% url 'upload_file' %}"  enctype="multipart/form-data"
+            <form enctype="multipart/form-data"
                   method="post" id="fileupload" name="fileupload" onsubmit="return false">
                 {% csrf_token %}
-                <div class="file-upload vcenter buttons" onchange="return document.getElementById('fileupload').submit();">
+                <div class="file-upload vcenter buttons">
                     <label>
                         <input type="file" accept="text/*" name="file_upload" id="file_upload"  >
                         <span>Текст</span>
@@ -33,7 +33,7 @@
     <div class="row">
         <div  id="textarea_div" class="textdiv">
             <form>
-                <textarea id="textarea" style="font-size: 20px" class="textarea" readonly disabled title="">{{Text}}</textarea>
+                <textarea id="textarea" class="textarea text_main" readonly disabled title="">{{Text}}</textarea>
             </form>
         </div>
     </div>
@@ -56,46 +56,92 @@
     </div>
 
 <script type="text/javascript">
-{#    var frm = $('#fileupload');#}
-{#file = new FormData(document.forms.fileupload);#}
-{#file.append( 'file_upload',  $('input[type=file]')[0].files[0] );#}
-{#var data = $("form").serialize();#}
-{##}
-{#    function asda() {#}
-{#        $.ajax({#}
-{#            type: 'POST',#}
-{#            url: {% url 'upload_file' %},#}
-{#            data: file,#}
-{#            success: function (data) {#}
-{#                alert(data);#}
-{#                $("#textarea_div").html(data);#}
-{#            },#}
-{#            error: function (data) {#}
-{#                alert(data)#}
-{#            }#}
-{#        });#}
-{#        return false;#}
-{#    }#}
 
-  $(document).ready(function() {
-        $('#analysis').click(function(){
-            $('.loading').css('visibility', 'visible');
-            $('.loading').css('padding-top', '20px');
-        });
+// Переменная куда будут располагаться данные файлов
+var files;
+$('#file_upload').change(function(){
+    files = this.files;
+ var data = new FormData(document.forms.fileupload);// объявляем форму (jQuery передает POST данные с помощью FormData)
+// связываем поля формы с имеющимися, чтобы в след строке обратиться как input[type=file]
+data.append('file',  $('input[type=file]')[0].files[0] );// первое - ключ, по нему вытаскиваем файл во view
+{#console.log('Данные ' + data.get('file_upload'));#}// проверим,что считали файл
+    $.ajax({
+        url: {% url 'upload_file' %},// urls->views->метод
+        type: 'POST',
+        data: data,// передаем файл
+        cache: false,
+        dataType: 'json',
+        processData: false, // Не обрабатываем файлы (Don't process the files)
+        contentType: false, // Так jQuery скажет серверу что это строковой запрос
+        success: function( respond, textStatus, jqXHR ){
+            if( typeof respond.error === 'undefined' ){ {# если ошибки нет #}
+                $('#textarea').text(respond.Text);
+            }
+            else{
+                console.log('ОШИБКИ ОТВЕТА сервера: ' + respond.error +' '+textStatus);
+            }
+        },
+        error: function( jqXHR, textStatus, errorThrown ){
+            console.log('ОШИБКИ AJAX запроса: ' + textStatus +' '+errorThrown);
+        }
     });
+});
+
+
+$('#analysis').click(function(){
+    $('.loading').css('visibility', 'visible'); // Делаем индикацию анализа видимой
+    $('.loading').css('padding-top', '20px');
+{#context = RequestContext(request, {'Text': Text.txt, 'water': "%.2f" % water_, 'inform': "%.2f" % inform_,#}
+{#                                               'orthograf': "%.2f" % orthograf_, 'syntax': "%.2f" % syntax_,#}
+{#                                               'advert': "%.2f" % 5, 'tonal': "%.2f" % tonal_,#}
+{#                                               'total': "%.2f" % total_})#}
+    $.ajax({
+        url: {% url 'start' %},// urls->views->метод
+        type: 'GET',
+        data: {},
+        cache: false,
+        dataType: 'json',
+        processData: false, // Не обрабатываем файлы (Don't process the files)
+        contentType: false, // Так jQuery скажет серверу что это строковой запрос
+        success: function( respond, textStatus, jqXHR ){
+            if( typeof respond.error === 'undefined' ){ {# если ошибки нет #}
+                console.log('Данные! ' + respond.water);
+                $('#water_td').text(respond.water);
+                $('#orthograf_td').text(respond.orthograf);
+                $('#syntax_td').text(respond.syntax);
+                $('#tonal_td').text(respond.tonal);
+                $('#advert_td').text(respond.advert);
+                $('#total_td').text(respond.total);
+                $('#inform_td').text(respond.inform);
+                $('#textarea').text(respond.Text);
+{#                $.load('{% url 'home' %}');#}
+                $('.loading').css('visibility', 'hidden'); // Скрываем индикацию анализа
+                $('.loading').css('padding-top', '0px');
+            }
+            else{
+                console.log('ОШИБКИ ОТВЕТА сервера: ' + respond.error +' '+textStatus);
+            }
+        },
+        error: function( jqXHR, textStatus, errorThrown ){
+            console.log('ОШИБКИ AJAX запроса: ' + textStatus +' '+errorThrown);
+        }
+    });
+
+});
+
 
 </script>
 
     <div style="margin-top: 20px">
-        <table class="table" id="table">
-            <tr style="font-size: 20px"><th>Критерий</th><th>Оценка</th></tr>
-            <tr style="font-size: 20px"><td>Водность</td><td>{{ water|default:0 }}</td></tr>
-            <tr style="font-size: 20px"><td>Информативность</td><td>{{ inform|default:0 }}</td></tr>
-            <tr style="font-size: 20px"><td>Орфографическая корректность</td><td>{{ orthograf|default:0 }}</td></tr>
-            <tr style="font-size: 20px"><td>Синтаксическая корректность</td><td>{{ syntax|default:0 }}</td></tr>
-            <tr style="font-size: 20px"><td>Рекламность</td><td>{{ advert|default:0 }}</td></tr>
-            <tr style="font-size: 20px"><td>Тональность</td><td>{{ tonal|default:0 }}</td></tr>
-            <tr style="font-size: 20px"><td>Общая оценка</td><td>{{ total|default:0 }}</td></tr>
+        <table class="table text_main" id="table">
+            <tr><th>Критерий</th><th>Оценка</th></tr>
+            <tr><td>Водность</td><td id="water_td">{{ water|default:0 }}</td></tr>
+            <tr><td>Информативность</td><td id="inform_td">{{ inform|default:0 }}</td></tr>
+            <tr><td>Орфографическая корректность</td><td id="orthograf_td">{{ orthograf|default:0 }}</td></tr>
+            <tr><td>Синтаксическая корректность</td><td id="syntax_td">{{ syntax|default:0 }}</td></tr>
+            <tr><td>Рекламность</td><td id="advert_td">{{ advert|default:0 }}</td></tr>
+            <tr><td>Тональность</td><td id="tonal_td">{{ tonal|default:0 }}</td></tr>
+            <tr><td>Общая оценка</td><td id="total_td">{{ total|default:0 }}</td></tr>
         </table>
     </div>
 

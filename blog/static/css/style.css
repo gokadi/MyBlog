@@ -4,7 +4,7 @@
 
 /* Индикация анализирования */
 .loading {
-    padding-top: 0px;
+    padding-top: 0px; /* Изначально 0, когда производится анализ - смещаем */
     visibility: hidden;
 }
 
@@ -121,6 +121,10 @@ body {
     border-radius: 5px;
     /*padding: 8px 4px;*/
     color: #e5e5e5;
+}
+/* Размер шрифта для обычного текста */
+.text_main {
+    font-size: 20px;
 }
 .file-upload:hover {
     background: #ff8080;
