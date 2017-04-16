@@ -1,0 +1,10 @@
+<table class="table text_main" id="table">
+            <tr><th>Критерий</th><th>Оценка</th></tr>
+            <tr><td>Водность</td><td>{{ water|default:0 }}</td></tr>
+            <tr><td>Информативность</td><td>{{ inform|default:0 }}</td></tr>
+            <tr><td>Орфографическая корректность</td><td>{{ orthograf|default:0 }}</td></tr>
+            <tr><td>Синтаксическая корректность</td><td>{{ syntax|default:0 }}</td></tr>
+            <tr><td>Рекламность</td><td>{{ advert|default:0 }}</td></tr>
+            <tr><td>Тональность</td><td>{{ tonal|default:0 }}</td></tr>
+            <tr><td>Общая оценка</td><td>{{ total|default:0 }}</td></tr>
+</table>
