@@ -1,7 +1,6 @@
 import pandas as pd
 from bs4 import BeautifulSoup
 import re
-import nltk.data
 from nltk.tokenize import sent_tokenize
 from nltk.corpus import stopwords
 import logging

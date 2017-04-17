@@ -1,4 +1,3 @@
-import os
 import re
 import pymorphy2
 from collections import OrderedDict

@@ -1,6 +1,5 @@
 from gensim.models import Word2Vec
 import numpy as np
-import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
 from blog.text_analysis.neural_imdb_word2vec_training import *
 from sklearn.externals import joblib

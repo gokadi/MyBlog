@@ -1,6 +1,4 @@
 import pymorphy2
-from nltk.corpus import stopwords
-import nltk
 
 class Water:
 

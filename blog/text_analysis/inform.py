@@ -1,5 +1,3 @@
-
-
 class Informativity:
 
     def __init__(self, obj):
