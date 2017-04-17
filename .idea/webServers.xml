@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="ad52ec6e-794b-4048-b8fe-88dda3faff49" name="pythoneverywhere" url="http://ftp68.hostland.ru">
+        <fileTransfer host="ftp68.hostland.ru" port="21" rootFolder="/textanalyse.ru/htdocs/www/cgi-bin">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="21" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
