@@ -27,7 +27,7 @@ class Analysis:
             print(self.info)
             print(self.ton)
             print(self.adv)
-            self.total_mark = (self.water + self.gramm + self.orth + self.info) / 4
+            self.total_mark = (self.water + self.gramm + self.orth + self.info+self.adv*self.ton) / 4
             print("Общая оценка качества текста: %.2f" % self.total_mark)
             return self.gramm, self.water, self.orth, self.info, self.total_mark, self.ton, self.adv
         else:
