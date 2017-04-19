@@ -51,7 +51,7 @@ mathematics==1.0.0
 mccabe==0.6.1
 mod-wsgi==4.5.15
 nltk==3.2.2
-numpy==1.12.1
+numpy==1.12.1+mkl
 oauthlib==2.0.1
 olefile==0.44
 packaging==16.8

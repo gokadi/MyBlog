@@ -1,8 +1,9 @@
 import re
 import pymorphy2
 from collections import OrderedDict
-from blog.text_analysis.neural_imdb_word2vec_training import Word2VecTrain
-
+from bs4 import BeautifulSoup
+from nltk.corpus import stopwords
+import numpy as np
 
 class PrepText:
 
@@ -57,10 +58,45 @@ class PrepText:
         return self.__flag
 
     def get_words(self):  # используется для проверки на водность и орфографию, т.к. в частотном словаре нет повторений
-        return Word2VecTrain.review_to_wordlist(self.__txt)
+        return self.review_to_wordlist(self.__txt)
 
     def get_txt(self):
         return self.__txt
 
     def get_totalword(self):
         return self.__total_words
+
+    @staticmethod # Делим анализируемый текст на список слов
+    def review_to_wordlist(review, remove_stopwords=False):
+        # Делим преложение на список слов (list of words)
+        # 1. Очистка от html тегов и URLов
+        review = re.sub(r'^https?:\/\/.*[\r\n]*', '', review, flags=re.MULTILINE)
+        review_text = BeautifulSoup(review, "html.parser").get_text()
+        # 2. Оставить только буквы
+        review_text = re.sub("[^а-яА-Я]", " ", review_text)
+        # 3. Привести текст к нижнему регистру и разделить на слова
+        words = review_text.lower().split()
+        # 4. Удалить стоп слова (по флагу)
+        if remove_stopwords:
+            # stops = set(stopwords.words("english"))
+            stops = set(stopwords.words("russian"))
+            words = [w for w in words if not w in stops]
+        # 5. Вернуть список слов
+        return (words)
+
+    @staticmethod # Представляем текст (в виде списка слов) в виде чисел (усредненный вектор по всем словам в тексте)
+    def makeFeatureVec(words, model, num_features):
+        # Усредняем вектора для всех слов в обзоре
+        # Инициализируем массив
+        featureVec = np.zeros((num_features,), dtype="float32")
+        nwords = 0.
+        # Index2word - список, содержащий слова из словаря модели. Конвертируем в set
+        index2word_set = set(model.wv.index2word)
+        # Для всех слова в обзоре, если они в словаре, суммируем вектора
+        for word in words:
+            if word in index2word_set:
+                nwords = nwords + 1.
+                featureVec = np.add(featureVec, model[word])
+        # Усредняем получившийся вектор
+        featureVec = np.divide(featureVec, nwords)
+        return featureVec
